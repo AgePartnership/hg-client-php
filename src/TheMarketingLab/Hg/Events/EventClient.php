@@ -4,7 +4,7 @@ namespace TheMarketingLab\Hg\Events;
 
 use TheMarketingLab\Hg\Events\EventInterface;
 use TheMarketingLab\Hg\Events\EventClientInterface;
-use \Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Http\Client as GuzzleClient;
 
 class EventClient implements EventClientInterface
 {
