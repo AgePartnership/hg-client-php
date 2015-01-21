@@ -1,6 +1,20 @@
 {
+    "name": "themarketinglab/hg-client",
+    "description": "Hg client library for PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Will Otterburn",
+            "email": "will@themarketinglab.co.uk"
+        }
+    ],
     "require": {
         "guzzle/guzzle": "~3.9",
         "symfony/http-foundation": "~2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheMarketingLab\\Hg\\": "src/"
+        }
     }
 }
