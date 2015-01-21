@@ -10,5 +10,10 @@
     ],
     "require": {
         "guzzle/guzzle": "~3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheMarketingLab\\Hg\\": "src/"
+        }
     }
 }
