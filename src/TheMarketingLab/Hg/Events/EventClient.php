@@ -27,16 +27,7 @@ class EventClient implements EventClientInterface
             'appId' => $event->getAppId(),
             'sessionId' => $event->getSessionId(),
             'name' => $event->getName(),
-            'request' => [
-                'method' => $request->getMethod(),
-                'host' => $request->getHttpHost(),
-                'path' => $request->getPathInfo(),
-                'scheme' => $request->getScheme(),
-                'headers' => $request->headers->all(),
-                'query' => $request->query->all(),
-                'content' => $reuqest->getContent(),
-                'raw' => $request->__toString()
-            ]
+            'request' => $request->__toString()
         ]));
     }
 }
