@@ -23,11 +23,13 @@ class EventClient implements EventClientInterface
     public function publish(EventInterface $event)
     {
         $request = $event->getRequest();
-        $this->getClient()->post('/', json_encode([
+        $guzzlerequest = $this->getClient()->post('/', json_encode([
             'appId' => $event->getAppId(),
             'sessionId' => $event->getSessionId(),
             'name' => $event->getName(),
             'request' => $request->__toString()
         ]));
+        $response = $guzzlerequest->send();
+        return $response;
     }
 }
