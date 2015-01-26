@@ -35,25 +35,25 @@ class EventClientSpec extends ObjectBehavior
         Request $request,
         GuzzleRequestInterface $guzzleRequest,
         GuzzleResponse $guzzleResponse
-    )   {
-            $event->getAppId()->willReturn('appId');
-            $event->getSessionId()->willReturn('sessionId');
-            $event->getName()->willReturn('name');
-            $event->getRequest()->willReturn($request);
+    ) {
+        $this->beConstructedWith($client);
 
-            $request->__toString()->willReturn('wow');
+        $event->getAppId()->willReturn('appId');
+        $event->getSessionId()->willReturn('sessionId');
+        $event->getName()->willReturn('name');
+        $event->getRequest()->willReturn($request);
 
-            $this->getClient()->willReturn($client);
+        $request->__toString()->willReturn('wow');
 
-            $client->post('/', json_encode([
-                'appId' => 'appId',
-                'sessionId' => 'sessionId',
-                'name' => 'name',
-                'request' => 'wow'
-            ]))->willReturn($guzzleRequest);
+        $client->post('/', json_encode([
+            'appId' => 'appId',
+            'sessionId' => 'sessionId',
+            'name' => 'name',
+            'request' => 'wow'
+        ]))->willReturn($guzzleRequest);
 
-            $guzzleRequest->send()->willReturn($guzzleResponse);
+        $guzzleRequest->send()->willReturn($guzzleResponse);
 
-            $this->publish($event)->shouldReturn($response);
-        }
+        $this->publish($event)->shouldReturn($guzzleResponse);
+    }
 }
