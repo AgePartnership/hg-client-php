@@ -7,16 +7,14 @@ use Prophecy\Argument;
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response as GuzzleResponse;
-use TheMarketingLab\Hg\Events\Event;
+use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
+use TheMarketingLab\Hg\Events\EventInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class EventClientSpec extends ObjectBehavior
 {
     function let(GuzzleClientInterface $guzzle)
     {
-        $plugin = new MockPlugin();
-        $plugin->addResponse(new GuzzleResponse(200));
-        $guzzle->addSubscriber($plugin);
         $this->beConstructedWith($guzzle);
     }
     
@@ -31,12 +29,31 @@ class EventClientSpec extends ObjectBehavior
         $this->getClient()->shouldImplement('Guzzle\Http\ClientInterface');
     }
 
-    function it_should_publish_event()
-    {
-        $request = new Request();
-        $event = new Event('appId', 'sessionId', 'name', $request);
-        $response = $this->publish($event);
-        $response->shouldHaveType('Guzzle\Http\Message\Response');
-        $response->getStatusCode()->shouldBe(400);
-    }
+    function it_should_publish_event(
+        GuzzleClientInterface $client,
+        EventInterface $event,
+        Request $request,
+        GuzzleRequestInterface $guzzleRequest,
+        GuzzleResponse $guzzleResponse
+    )   {
+            $event->getAppId()->willReturn('appId');
+            $event->getSessionId()->willReturn('sessionId');
+            $event->getName()->willReturn('name');
+            $event->getRequest()->willReturn($request);
+
+            $request->__toString()->willReturn('wow');
+
+            $this->getClient()->willReturn($client);
+
+            $client->post('/', json_encode([
+                'appId' => 'appId',
+                'sessionId' => 'sessionId',
+                'name' => 'name',
+                'request' => 'wow'
+            ]))->willReturn($guzzleRequest);
+
+            $guzzleRequest->send()->willReturn($guzzleResponse);
+
+            $this->publish($event)->shouldReturn($response);
+        }
 }
