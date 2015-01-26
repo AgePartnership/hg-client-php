@@ -4,13 +4,13 @@ namespace TheMarketingLab\Hg\Events;
 
 use TheMarketingLab\Hg\Events\EventInterface;
 use TheMarketingLab\Hg\Events\EventClientInterface;
-use Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 
 class EventClient implements EventClientInterface
 {
     private $client;
 
-    public function __construct(GuzzleClient $client)
+    public function __construct(GuzzleClientInterface $client)
     {
         $this->client = $client;
     }
