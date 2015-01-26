@@ -30,14 +30,12 @@ class EventClientSpec extends ObjectBehavior
     }
 
     function it_should_publish_event(
-        GuzzleClientInterface $client,
+        GuzzleClientInterface $guzzle,
         EventInterface $event,
         Request $request,
         GuzzleRequestInterface $guzzleRequest,
         GuzzleResponse $guzzleResponse
     ) {
-        $this->beConstructedWith($client);
-
         $event->getAppId()->willReturn('appId');
         $event->getSessionId()->willReturn('sessionId');
         $event->getName()->willReturn('name');
@@ -45,7 +43,7 @@ class EventClientSpec extends ObjectBehavior
 
         $request->__toString()->willReturn('wow');
 
-        $client->post('/', json_encode([
+        $guzzle->post('/', json_encode([
             'appId' => 'appId',
             'sessionId' => 'sessionId',
             'name' => 'name',
