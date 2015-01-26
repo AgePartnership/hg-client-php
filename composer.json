@@ -14,7 +14,7 @@
         "symfony/http-foundation": "~2.6"
     },
     "require-dev": {
-        "behat/behat": "~3.0"
+        "phpspec/phpspec": "~2.1"
     },
     "autoload": {
         "psr-4": {
