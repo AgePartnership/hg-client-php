@@ -8,13 +8,18 @@ use Symfony\Component\HttpFoundation\Request;
 class Event implements EventInterface
 {
     private $appId;
+    private $sessionId;
+    private $name;
+    private $request;
+    private $timestamp;
 
-    public function __construct($appId, $sessionId, $name, Request $request)
+    public function __construct($appId, $sessionId, $name, Request $request, $timestamp)
     {
         $this->appId = $appId;
         $this->sessionId = $sessionId;
         $this->name = $name;
         $this->request = $request;
+        $this->timestamp = $timestamp;
     }
 
     public function getAppId()
@@ -36,5 +41,9 @@ class Event implements EventInterface
     public function getRequest()
     {
         return $this->request;
+    }
+    public function getTimestamp()
+    {
+        return $this->timestamp;
     }
 }

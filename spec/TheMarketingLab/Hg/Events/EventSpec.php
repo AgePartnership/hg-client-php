@@ -10,7 +10,7 @@ class EventSpec extends ObjectBehavior
 {
     public function let(Request $request)
     {
-        $this->beConstructedWith('appId', 'sessionId', 'name', $request);
+        $this->beConstructedWith('appId', 'sessionId', 'name', $request, 123456);
     }
 
     function it_is_initializable()
@@ -37,5 +37,10 @@ class EventSpec extends ObjectBehavior
     function it_should_have_a_request()
     {
         $this->getRequest()->shouldImplement('Symfony\Component\HttpFoundation\Request');
+    }
+
+    function it_should_have_a_timestamp()
+    {
+        $this->getTimestamp()->shouldReturn(123456);
     }
 }

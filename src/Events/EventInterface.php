@@ -11,4 +11,5 @@ interface EventInterface
      * @return Request
      */
     public function getRequest();
+    public function getTimestamp();
 }

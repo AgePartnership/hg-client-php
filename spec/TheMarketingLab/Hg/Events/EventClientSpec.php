@@ -40,15 +40,19 @@ class EventClientSpec extends ObjectBehavior
         $event->getSessionId()->willReturn('sessionId');
         $event->getName()->willReturn('name');
         $event->getRequest()->willReturn($request);
+        $event->getTimestamp()->willReturn(123456);
 
         $request->__toString()->willReturn('wow');
 
-        $guzzle->post('/', json_encode([
+        $guzzle->post('/events', array('Content-Type' => 'application/json'), json_encode(
+            array(
             'appId' => 'appId',
             'sessionId' => 'sessionId',
             'name' => 'name',
-            'request' => 'wow'
-        ]))->willReturn($guzzleRequest);
+            'request' => 'wow',
+            'timestamp' => 123456
+            )
+        ))->willReturn($guzzleRequest);
 
         $guzzleRequest->send()->willReturn($guzzleResponse);
 
