@@ -5,7 +5,6 @@ namespace spec\TheMarketingLab\Hg\Events;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
-use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response as GuzzleResponse;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use TheMarketingLab\Hg\Events\EventInterface;
