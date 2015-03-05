@@ -11,14 +11,20 @@ class Event implements EventInterface
     private $name;
     private $request;
     private $timestamp;
+    private $current_test;
+    private $test_side;
+    private $segment;
 
-    public function __construct($appId, $sessionId, $name, Request $request, $timestamp)
+    public function __construct($appId, $sessionId, $name, Request $request, $timestamp, $current_test, $test_side, $segment)
     {
         $this->appId = $appId;
         $this->sessionId = $sessionId;
         $this->name = $name;
         $this->request = $request;
         $this->timestamp = $timestamp;
+        $this->current_test = $current_test;
+        $this->test_side = $test_side;
+        $this->segment = $segment;
     }
 
     public function getAppId()
@@ -44,5 +50,20 @@ class Event implements EventInterface
     public function getTimestamp()
     {
         return $this->timestamp;
+    }
+
+    public function getCurrentTest()
+    {
+        return $this->current_test;
+    }
+
+    public function getTestSide()
+    {
+        return $this->test_side;
+    }
+
+    public function getSegment()
+    {
+        return $this->segment;
     }
 }

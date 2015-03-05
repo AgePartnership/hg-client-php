@@ -10,7 +10,7 @@ class EventSpec extends ObjectBehavior
 {
     public function let(Request $request)
     {
-        $this->beConstructedWith('appId', 'sessionId', 'name', $request, 123456);
+        $this->beConstructedWith('appId', 'sessionId', 'name', $request, 123456, 1, 0, 'default');
     }
 
     function it_is_initializable()
@@ -43,4 +43,20 @@ class EventSpec extends ObjectBehavior
     {
         $this->getTimestamp()->shouldReturn(123456);
     }
+
+    function it_should_have_a_current_test()
+    {
+        $this->getCurrentTest()->shouldReturn(1);
+    }
+
+    function it_should_have_a_test_side()
+    {
+        $this->getTestSide()->shouldReturn(0);
+    }
+
+    function it_should_have_a_segment()
+    {
+        $this->getSegment()->shouldReturn('default');
+    }
+
 }
