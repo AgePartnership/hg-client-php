@@ -12,4 +12,7 @@ interface EventInterface
      */
     public function getRequest();
     public function getTimestamp();
+    public function getCurrentTest();
+    public function getTestSide();
+    public function getSegment();
 }

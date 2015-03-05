@@ -40,6 +40,9 @@ class EventClientSpec extends ObjectBehavior
         $event->getName()->willReturn('name');
         $event->getRequest()->willReturn($request);
         $event->getTimestamp()->willReturn(123456);
+        $event->getCurrentTest()->willReturn(1);
+        $event->getTestSide()->willReturn(0);
+        $event->getSegment()->willReturn('default');
 
         $request->__toString()->willReturn('wow');
 
@@ -49,7 +52,10 @@ class EventClientSpec extends ObjectBehavior
             'sessionId' => 'sessionId',
             'name' => 'name',
             'request' => 'wow',
-            'timestamp' => 123456
+            'timestamp' => 123456,
+            'current_test' => 1,
+            'test_side' => 0,
+            'segment' => 'default'
             )
         ))->willReturn($guzzleRequest);
 

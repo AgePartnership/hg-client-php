@@ -17,7 +17,10 @@ class EventClient extends AbstractClient implements EventClientInterface
                 'sessionId' => $event->getSessionId(),
                 'name' => $event->getName(),
                 'request' => $request->__toString(),
-                'timestamp' => $event->getTimestamp()
+                'timestamp' => $event->getTimestamp(),
+                'current_test' => $event->getCurrentTest(),
+                'test_side' => $event->getTestSide(),
+                'segment' => $event->getSegment()
             )
         );
         $guzzlerequest = $this->getClient()->post('/events', array('Content-Type' => 'application/json'), $postdata);
