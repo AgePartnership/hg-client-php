@@ -11,6 +11,7 @@ class EventClient extends AbstractClient implements EventClientInterface
     public function publish(EventInterface $event)
     {
         $request = $event->getRequest();
+        $test = $event->getTest();
         $postdata = json_encode(
             array(
                 'appId' => $event->getAppId(),
@@ -18,8 +19,10 @@ class EventClient extends AbstractClient implements EventClientInterface
                 'name' => $event->getName(),
                 'request' => $request->__toString(),
                 'timestamp' => $event->getTimestamp(),
-                'current_test' => $event->getCurrentTest(),
-                'test_side' => $event->getTestSide(),
+                'test' => array(
+                    'id' => $test->getId(),
+                    'variant' => $test->getVariant()
+                ),
                 'segment' => $event->getSegment()
             )
         );

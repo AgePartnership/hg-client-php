@@ -8,6 +8,7 @@ use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 use Guzzle\Http\Message\Response as GuzzleResponse;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use TheMarketingLab\Hg\Events\EventInterface;
+use TheMarketingLab\Hg\Sessions\TestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class EventClientSpec extends ObjectBehavior
@@ -32,6 +33,7 @@ class EventClientSpec extends ObjectBehavior
         GuzzleClientInterface $guzzle,
         EventInterface $event,
         Request $request,
+        TestInterface $test,
         GuzzleRequestInterface $guzzleRequest,
         GuzzleResponse $guzzleResponse
     ) {
@@ -40,8 +42,9 @@ class EventClientSpec extends ObjectBehavior
         $event->getName()->willReturn('name');
         $event->getRequest()->willReturn($request);
         $event->getTimestamp()->willReturn(123456);
-        $event->getCurrentTest()->willReturn(1);
-        $event->getTestSide()->willReturn(0);
+        $event->getTest()->willReturn($test);
+        $test->getId()->willReturn(1);
+        $test->getVariant()->willReturn(0);
         $event->getSegment()->willReturn('default');
 
         $request->__toString()->willReturn('wow');
@@ -53,8 +56,10 @@ class EventClientSpec extends ObjectBehavior
             'name' => 'name',
             'request' => 'wow',
             'timestamp' => 123456,
-            'current_test' => 1,
-            'test_side' => 0,
+            'test' => array(
+                'id' => 1,
+                'variant' => 0
+            ),
             'segment' => 'default'
             )
         ))->willReturn($guzzleRequest);

@@ -3,6 +3,7 @@
 namespace TheMarketingLab\Hg\Events;
 
 use Symfony\Component\HttpFoundation\Request;
+use TheMarketingLab\Hg\Sessions\TestInterface;
 
 class Event implements EventInterface
 {
@@ -11,19 +12,17 @@ class Event implements EventInterface
     private $name;
     private $request;
     private $timestamp;
-    private $current_test;
-    private $test_side;
+    private $test;
     private $segment;
 
-    public function __construct($appId, $sessionId, $name, Request $request, $timestamp, $current_test, $test_side, $segment)
+    public function __construct($appId, $sessionId, $name, Request $request, $timestamp, TestInterface $test, $segment)
     {
         $this->appId = $appId;
         $this->sessionId = $sessionId;
         $this->name = $name;
         $this->request = $request;
         $this->timestamp = $timestamp;
-        $this->current_test = $current_test;
-        $this->test_side = $test_side;
+        $this->test = $test;
         $this->segment = $segment;
     }
 
@@ -52,18 +51,15 @@ class Event implements EventInterface
         return $this->timestamp;
     }
 
-    public function getCurrentTest()
+    public function getTest()
     {
-        return $this->current_test;
-    }
-
-    public function getTestSide()
-    {
-        return $this->test_side;
+        return $this->test;
     }
 
     public function getSegment()
     {
         return $this->segment;
     }
+
+    
 }
