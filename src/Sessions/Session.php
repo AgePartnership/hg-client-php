@@ -5,24 +5,17 @@ namespace TheMarketingLab\Hg\Sessions;
 class Session implements SessionInterface
 {
     private $id;
-    private $appId;
     private $test;
 
-    public function __construct($id, $appId, TestInterface $test = null)
+    public function __construct($id, TestInterface $test = null)
     {
         $this->id = $id;
-        $this->appId = $appId;
         $this->test = $test;
     }
 
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getAppId()
-    {
-        return $this->appId;
     }
 
     public function getTest()

@@ -10,7 +10,7 @@ class SessionSpec extends ObjectBehavior
 {
     function let(TestInterface $test)
     {
-        $this->beConstructedWith(1234,'stonetrader', $test);
+        $this->beConstructedWith(1234, $test);
     }
 
     function it_is_initializable()
@@ -22,12 +22,7 @@ class SessionSpec extends ObjectBehavior
     {
         $this->getId()->shouldReturn(1234);
     }
-
-    function it_should_have_an_app_id()
-    {
-        $this->getAppId()->shouldReturn('stonetrader');
-    }
-
+    
     function it_should_have_a_test()
     {
         $this->getTest()->shouldImplement('TheMarketingLab\Hg\Sessions\TestInterface');
@@ -35,13 +30,13 @@ class SessionSpec extends ObjectBehavior
 
     function it_should_not_have_a_test()
     {
-        $this->beConstructedWith(1234, 'stonetrader');
+        $this->beConstructedWith(1234);
         $this->getTest()->shouldReturn(null);
     }
 
     function it_should_add_a_test(TestInterface $test)
     {
-        $this->beConstructedWith(1234, 'stonetrader');
+        $this->beConstructedWith(1234);
         $this->addTest($test);
         $this->getTest()->shouldReturn($test);
     }

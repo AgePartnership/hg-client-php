@@ -8,22 +8,22 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 {
 
 
-    public function getSession(SessionInterface $session)
+    public function getSession($id, TestInterface $test = null)
     {
-        $test = $session->getTest();
         if ($test !== null) {
             $body = array('id' => $test->getId(), 'variant' => $test->getVariant());
         }
-        $uri = 'sessions/' . $session->getId();
+        $uri = 'sessions/' . $id;
         $request = $this->getClient()->createRequest('GET', $uri, array(), isset($body) ? $body : null, array());
         $response = $request->send();
         $data = $response->json();
 
-        if ($data !== null) {
-            $returnedTest = new Test($data['id'], $data['variant']);
-            $session->addTest($returnedTest);
+        $returnedTest = null;
+        if (isset($data['test'])) {
+            $returnedTest = new Test($data['test']['id'], $data['test']['variant']);
         }
 
+        $session = new Session($id, $returnedTest);
         return $session;
     }
 }

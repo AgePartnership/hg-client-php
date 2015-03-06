@@ -14,7 +14,7 @@ class EventClient extends AbstractClient implements EventClientInterface
         $test = $event->getTest();
         $postdata = json_encode(
             array(
-                'appId' => $event->getAppId(),
+                'appId' => $this->getAppId(),
                 'sessionId' => $event->getSessionId(),
                 'name' => $event->getName(),
                 'request' => $request->__toString(),

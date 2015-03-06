@@ -11,18 +11,13 @@ class EventSpec extends ObjectBehavior
 {
     public function let(Request $request, TestInterface $test)
     {
-        $this->beConstructedWith('appId', 'sessionId', 'name', $request, 123456, $test, 'default');
+        $this->beConstructedWith('sessionId', 'name', $request, 123456, $test, 'default');
     }
 
     function it_is_initializable()
     {
         $this->shouldHaveType('TheMarketingLab\Hg\Events\Event');
         $this->shouldImplement('TheMarketingLab\Hg\Events\EventInterface');
-    }
-
-    function it_should_have_an_app_id()
-    {
-        $this->getAppId()->shouldReturn('appId');
     }
 
     function it_should_have_a_session_id()

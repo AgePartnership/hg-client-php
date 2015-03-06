@@ -7,7 +7,6 @@ use TheMarketingLab\Hg\Sessions\TestInterface;
 
 class Event implements EventInterface
 {
-    private $appId;
     private $sessionId;
     private $name;
     private $request;
@@ -15,20 +14,14 @@ class Event implements EventInterface
     private $test;
     private $segment;
 
-    public function __construct($appId, $sessionId, $name, Request $request, $timestamp, TestInterface $test, $segment)
+    public function __construct($sessionId, $name, Request $request, $timestamp, TestInterface $test, $segment)
     {
-        $this->appId = $appId;
         $this->sessionId = $sessionId;
         $this->name = $name;
         $this->request = $request;
         $this->timestamp = $timestamp;
         $this->test = $test;
         $this->segment = $segment;
-    }
-
-    public function getAppId()
-    {
-        return $this->appId;
     }
 
     public function getSessionId()

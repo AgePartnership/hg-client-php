@@ -15,13 +15,18 @@ class EventClientSpec extends ObjectBehavior
 {
     function let(GuzzleClientInterface $guzzle)
     {
-        $this->beConstructedWith($guzzle);
+        $this->beConstructedWith($guzzle,'appId');
     }
     
     function it_is_initializable()
     {
         $this->shouldHaveType('TheMarketingLab\Hg\Events\EventClient');
         $this->shouldImplement('TheMarketingLab\Hg\Events\EventClientInterface');
+    }
+
+    function it_should_have_an_app_id()
+    {
+        $this->getAppId()->shouldReturn('appId');
     }
 
     function it_should_have_client()
@@ -37,7 +42,6 @@ class EventClientSpec extends ObjectBehavior
         GuzzleRequestInterface $guzzleRequest,
         GuzzleResponse $guzzleResponse
     ) {
-        $event->getAppId()->willReturn('appId');
         $event->getSessionId()->willReturn('sessionId');
         $event->getName()->willReturn('name');
         $event->getRequest()->willReturn($request);
