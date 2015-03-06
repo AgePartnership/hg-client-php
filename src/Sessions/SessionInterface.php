@@ -4,7 +4,8 @@ namespace TheMarketingLab\Hg\Sessions;
 
 interface SessionInterface
 {
+    public function getId();
     public function getAppId();
-    public function getSessionId();
-    public function getTimestamp();
+    public function getTest();
+    public function addTest(TestInterface $test);
 }
