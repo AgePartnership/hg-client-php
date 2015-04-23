@@ -3,23 +3,36 @@
 namespace TheMarketingLab\Hg\Events;
 
 use TheMarketingLab\Hg\Events\EventInterface;
+use TheMarketingLab\Hg\Tests\ViewInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Event implements EventInterface
 {
+    private $timestamp;
     private $appId;
     private $sessionId;
     private $name;
     private $request;
-    private $timestamp;
 
-    public function __construct($appId, $sessionId, $name, Request $request, $timestamp)
-    {
+    public function __construct(
+        $timestamp,
+        $appId,
+        $sessionId,
+        $name,
+        ViewInterface $view = null,
+        Request $request = null
+    ) {
+        $this->timestamp = $timestamp;
         $this->appId = $appId;
         $this->sessionId = $sessionId;
         $this->name = $name;
+        $this->view = $view;
         $this->request = $request;
-        $this->timestamp = $timestamp;
+    }
+
+    public function getTimestamp()
+    {
+        return $this->timestamp;
     }
 
     public function getAppId()
@@ -35,15 +48,14 @@ class Event implements EventInterface
     {
         return $this->name;
     }
-    /**
-     * @return Request
-     */
+
+    public function getView()
+    {
+        return $this->view;
+    }
+
     public function getRequest()
     {
         return $this->request;
-    }
-    public function getTimestamp()
-    {
-        return $this->timestamp;
     }
 }

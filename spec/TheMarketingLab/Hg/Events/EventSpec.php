@@ -4,13 +4,14 @@ namespace spec\TheMarketingLab\Hg\Events;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use TheMarketingLab\Hg\Tests\ViewInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class EventSpec extends ObjectBehavior
 {
-    public function let(Request $request)
+    public function let()
     {
-        $this->beConstructedWith('appId', 'sessionId', 'name', $request, 123456);
+        $this->beConstructedWith(123456, 'appId', 'sessionId', 'name');
     }
 
     function it_is_initializable()
@@ -19,28 +20,35 @@ class EventSpec extends ObjectBehavior
         $this->shouldImplement('TheMarketingLab\Hg\Events\EventInterface');
     }
 
-    function it_should_have_an_app_id()
+    function it_has_a_timestamp()
+    {
+        $this->getTimestamp()->shouldReturn(123456);
+    }
+
+    function it_has_an_app_id()
     {
         $this->getAppId()->shouldReturn('appId');
     }
 
-    function it_should_have_a_session_id()
+    function it_has_a_session_id()
     {
         $this->getSessionId()->shouldReturn('sessionId');
     }
 
-    function it_should_have_a_name()
+    function it_has_a_name()
     {
         $this->getName()->shouldReturn('name');
     }
 
-    function it_should_have_a_request()
+    function it_can_have_a_test_view(ViewInterface $view)
     {
-        $this->getRequest()->shouldImplement('Symfony\Component\HttpFoundation\Request');
+        $this->beConstructedWith(123456, 'appId', 'sessionId', 'name', $view);
+        $this->getView()->shouldReturn($view);
     }
 
-    function it_should_have_a_timestamp()
+    function it_can_have_a_request(Request $request)
     {
-        $this->getTimestamp()->shouldReturn(123456);
+        $this->beConstructedWith(123456, 'appId', 'sessionId', 'name', null, $request);
+        $this->getRequest()->shouldReturn($request);
     }
 }
