@@ -39,16 +39,16 @@ class EventClient implements EventClientInterface
         );
 
         if ($view = $event->getView()) {
-            $data['view'] = [
+            $data['view'] = array(
                 'segment' => $view->getSegment(),
                 'test' => null
-            ];
+            );
 
             if ($test = $view->getTest()) {
-                $data['view']['test'] = [
+                $data['view']['test'] = array(
                     'id' => $test->getId(),
                     'variant' => $test->getVariant()
-                ];
+                );
             }
         }
 
