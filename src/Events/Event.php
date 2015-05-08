@@ -3,7 +3,7 @@
 namespace TheMarketingLab\Hg\Events;
 
 use TheMarketingLab\Hg\Events\EventInterface;
-use TheMarketingLab\Hg\Tests\ViewInterface;
+use TheMarketingLab\Hg\Views\ViewInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Event implements EventInterface
