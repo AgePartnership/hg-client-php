@@ -27,20 +27,20 @@ class ViewClient implements ViewClientInterface
 
     public function update(ViewInterface $view)
     {
-        $data = [
+        $data = array(
             'segment' => $view->getSegment()
-        ];
+        );
 
         if ($test = $view->getTest()) {
-            $data['test'] = [
+            $data['test'] = array(
                 'id' => $test->getId(),
                 'variant' => $test->getVariant()
-            ];
+            );
         }
 
-        $headers = [
+        $headers = array(
             'Content-Type' => 'application/json'
-        ];
+        );
 
         $request = $this->getClient()->post('/view', $headers, json_encode($data));
         $response = $request->send();

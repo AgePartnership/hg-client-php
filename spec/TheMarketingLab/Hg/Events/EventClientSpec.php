@@ -83,13 +83,13 @@ class EventClientSpec extends ObjectBehavior
             'appId' => 'appId',
             'sessionId' => 'sessionId',
             'name' => 'name',
-            'view' => [
+            'view' => array(
                 'segment' => 'default',
-                'test' => [
+                'test' => array(
                     'id' => 'testId',
                     'variant' => 0
-                ]
-            ],
+                )
+            ),
             'request' => null
         )))->willReturn($guzzleRequest);
 
