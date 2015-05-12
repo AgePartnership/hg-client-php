@@ -4,7 +4,7 @@ namespace spec\TheMarketingLab\Hg\Events;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use TheMarketingLab\Hg\Tests\ViewInterface;
+use TheMarketingLab\Hg\Views\ViewInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class EventSpec extends ObjectBehavior
