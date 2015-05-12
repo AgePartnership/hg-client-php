@@ -65,10 +65,10 @@ class ViewClientSpec extends ObjectBehavior
 
         $guzzle->post('/view', array('Content-Type' => 'application/json'), json_encode(array(
             'segment' => 'default',
-            'test' => [
+            'test' => array(
                 'id' => '123',
                 'variant' => 'A'
-            ]
+            )
         )))->shouldBeCalled()->willReturn($request);
 
         $request->send()->shouldBeCalled()->willReturn($response);
