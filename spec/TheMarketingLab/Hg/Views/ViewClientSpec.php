@@ -4,17 +4,18 @@ namespace spec\TheMarketingLab\Hg\Views;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Guzzle\Http\ClientInterface as GuzzleClientInterface;
-use Guzzle\Http\Message\Response as GuzzleResponse;
-use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
+use Guzzle\Http\ClientInterface;
+use Guzzle\Http\Message\Response;
+use Guzzle\Http\Message\RequestInterface;
 use TheMarketingLab\Hg\Views\ViewInterface;
+use TheMarketingLab\Hg\Views\ViewFactoryInterface;
 use TheMarketingLab\Hg\Tests\TestInterface;
 
 class ViewClientSpec extends ObjectBehavior
 {
-    function let(GuzzleClientInterface $guzzle)
+    function let(ClientInterface $guzzle, ViewFactoryInterface $viewFactory)
     {
-        $this->beConstructedWith($guzzle);
+        $this->beConstructedWith($guzzle, $viewFactory);
     }
 
     function it_is_initializable()
@@ -28,10 +29,12 @@ class ViewClientSpec extends ObjectBehavior
     }
 
     function it_updates_a_view(
-        GuzzleClientInterface $guzzle,
+        ClientInterface $guzzle,
         ViewInterface $view,
-        GuzzleRequestInterface $request,
-        GuzzleResponse $response
+        RequestInterface $request,
+        Response $response,
+        ViewFactoryInterface $viewFactory,
+        ViewInterface $updatedView
     ) {
         $view->getSegment()->willReturn('default');
         $view->getTest()->willReturn(null);
@@ -41,32 +44,36 @@ class ViewClientSpec extends ObjectBehavior
         )))->shouldBeCalled()->willReturn($request);
 
         $request->send()->shouldBeCalled()->willReturn($response);
+        $viewFactory->create($response)->shouldBeCalled()->willReturn($updatedView);
 
-        $this->update($view)->shouldReturn($response);
+        $this->update($view)->shouldReturn($updatedView);
     }
 
     function it_updates_a_view_with_a_test(
-        GuzzleClientInterface $guzzle,
+        ClientInterface $guzzle,
         ViewInterface $view,
         TestInterface $test,
-        GuzzleRequestInterface $request,
-        GuzzleResponse $response
+        RequestInterface $request,
+        Response $response,
+        ViewFactoryInterface $viewFactory,
+        ViewInterface $updatedView
     ) {
         $view->getSegment()->willReturn('default');
         $view->getTest()->willReturn($test);
         $test->getId()->willReturn('123');
         $test->getVariant()->willReturn('A');
 
-        $guzzle->post('/view', array('Content-Type' => 'application/json'), json_encode([
+        $guzzle->post('/view', array('Content-Type' => 'application/json'), json_encode(array(
             'segment' => 'default',
             'test' => [
                 'id' => '123',
                 'variant' => 'A'
             ]
-        ]))->shouldBeCalled()->willReturn($request);
+        )))->shouldBeCalled()->willReturn($request);
 
         $request->send()->shouldBeCalled()->willReturn($response);
+        $viewFactory->create($response)->shouldBeCalled()->willReturn($updatedView);
 
-        $this->update($view)->shouldReturn($response);
+        $this->update($view)->shouldReturn($updatedView);
     }
 }
