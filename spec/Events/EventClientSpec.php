@@ -9,7 +9,7 @@ use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response as GuzzleResponse;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 use TheMarketingLab\Hg\Events\EventInterface;
-use TheMarketingLab\Hg\Tests\ViewInterface;
+use TheMarketingLab\Hg\Views\ViewInterface;
 use TheMarketingLab\Hg\Tests\TestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -83,13 +83,13 @@ class EventClientSpec extends ObjectBehavior
             'appId' => 'appId',
             'sessionId' => 'sessionId',
             'name' => 'name',
-            'view' => [
+            'view' => array(
                 'segment' => 'default',
-                'test' => [
+                'test' => array(
                     'id' => 'testId',
                     'variant' => 0
-                ]
-            ],
+                )
+            ),
             'request' => null
         )))->willReturn($guzzleRequest);
 

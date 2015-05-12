@@ -1,6 +1,8 @@
 <?php
 
-namespace TheMarketingLab\Hg\Tests;
+namespace TheMarketingLab\Hg\Views;
+
+use TheMarketingLab\Hg\Tests\TestInterface;
 
 class View implements ViewInterface
 {

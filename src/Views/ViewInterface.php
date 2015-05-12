@@ -1,6 +1,6 @@
 <?php
 
-namespace TheMarketingLab\Hg\Tests;
+namespace TheMarketingLab\Hg\Views;
 
 interface ViewInterface
 {
