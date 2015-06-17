@@ -11,6 +11,9 @@ class ViewFactory implements ViewFactoryInterface
     {
         # Don't use json() because it returns assoc
         $data = json_decode($response->getBody());
+        if (isset($data->data)) {
+            $data = $data->data;
+        }
 
         $test = null;
         if (isset($data->test)) {
