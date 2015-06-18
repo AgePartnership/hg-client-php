@@ -14,11 +14,12 @@ class ViewFactorySpec extends ObjectBehavior
         $this->shouldHaveType('TheMarketingLab\Hg\Views\ViewFactory');
     }
 
-    function it_creates_a_view_with_no_test(
-        Response $response
-    ) {
+    function it_creates_a_view_with_no_test(Response $response)
+    {
         $response->getBody()->willReturn(json_encode(array(
-            'segment' => 'default'
+            'data' => array(
+                'segment' => 'default'
+            )
         )));
 
         $view = $this->create($response);
@@ -26,14 +27,15 @@ class ViewFactorySpec extends ObjectBehavior
         $view->getTest()->shouldReturn(null);
     }
 
-    function it_creates_a_view_with_a_test(
-        Response $response
-    ) {
+    function it_creates_a_view_with_a_test(Response $response)
+    {
         $response->getBody()->willReturn(json_encode(array(
-            'segment' => 'default',
-            'test' => array(
-                'id' => '123',
-                'variant' => 'A'
+            'data' => array(
+                'segment' => 'default',
+                'test' => array(
+                    'id' => '123',
+                    'variant' => 'A'
+                )
             )
         )));
 
@@ -43,5 +45,15 @@ class ViewFactorySpec extends ObjectBehavior
         $test->shouldHaveType('TheMarketingLab\Hg\Tests\Test');
         $test->getId()->shouldReturn('123');
         $test->getVariant()->shouldReturn('A');
+    }
+
+    function it_still_supports_no_data_property(Response $response)
+    {
+        $response->getBody()->willReturn(json_encode(array(
+            'segment' => 'default'
+        )));
+
+        $view = $this->create($response);
+        $view->getSegment()->shouldReturn('default');
     }
 }
