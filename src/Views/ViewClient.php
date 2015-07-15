@@ -50,7 +50,7 @@ class ViewClient implements ViewClientInterface
             'Content-Type' => 'application/json'
         );
 
-        $request = $this->getClient()->post('/view', $headers, json_encode($data));
+        $request = $this->getClient()->post('/views', $headers, json_encode($data));
         $response = $request->send();
 
         return $this->getViewFactory()->create($response);

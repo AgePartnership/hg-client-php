@@ -39,7 +39,7 @@ class ViewClientSpec extends ObjectBehavior
         $view->getSegment()->willReturn('default');
         $view->getTest()->willReturn(null);
 
-        $guzzle->post('/view', array('Content-Type' => 'application/json'), json_encode(array(
+        $guzzle->post('/views', array('Content-Type' => 'application/json'), json_encode(array(
             'segment' => 'default'
         )))->shouldBeCalled()->willReturn($request);
 
@@ -63,7 +63,7 @@ class ViewClientSpec extends ObjectBehavior
         $test->getId()->willReturn('123');
         $test->getVariant()->willReturn('A');
 
-        $guzzle->post('/view', array('Content-Type' => 'application/json'), json_encode(array(
+        $guzzle->post('/views', array('Content-Type' => 'application/json'), json_encode(array(
             'segment' => 'default',
             'test' => array(
                 'id' => '123',
