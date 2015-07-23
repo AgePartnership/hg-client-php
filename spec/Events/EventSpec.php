@@ -11,7 +11,7 @@ class EventSpec extends ObjectBehavior
 {
     public function let()
     {
-        $this->beConstructedWith(123456, 'appId', 'sessionId', 'name');
+        $this->beConstructedWith(123456, 'sessionId', 'collection');
     }
 
     function it_is_initializable()
@@ -25,30 +25,31 @@ class EventSpec extends ObjectBehavior
         $this->getTimestamp()->shouldReturn(123456);
     }
 
-    function it_has_an_app_id()
-    {
-        $this->getAppId()->shouldReturn('appId');
-    }
-
     function it_has_a_session_id()
     {
         $this->getSessionId()->shouldReturn('sessionId');
     }
 
-    function it_has_a_name()
+    function it_has_a_collection()
     {
-        $this->getName()->shouldReturn('name');
+        $this->getCollection()->shouldReturn('collection');
+    }
+
+    function it_can_have_data()
+    {
+        $this->beConstructedWith(123456, 'sessionId', 'collection', ['foo' => 'bar']);
+        $this->getData()->shouldReturn(['foo' => 'bar']);
     }
 
     function it_can_have_a_test_view(ViewInterface $view)
     {
-        $this->beConstructedWith(123456, 'appId', 'sessionId', 'name', $view);
+        $this->beConstructedWith(123456, 'sessionId', 'collection', null, $view);
         $this->getView()->shouldReturn($view);
     }
 
     function it_can_have_a_request(Request $request)
     {
-        $this->beConstructedWith(123456, 'appId', 'sessionId', 'name', null, $request);
+        $this->beConstructedWith(123456, 'sessionId', 'collection', null, null, $request);
         $this->getRequest()->shouldReturn($request);
     }
 }

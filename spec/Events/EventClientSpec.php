@@ -5,9 +5,9 @@ namespace spec\TheMarketingLab\Hg\Events;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
-use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response as GuzzleResponse;
 use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
+use TheMarketingLab\Hg\ConfigurationInterface;
 use TheMarketingLab\Hg\Events\EventInterface;
 use TheMarketingLab\Hg\Views\ViewInterface;
 use TheMarketingLab\Hg\Tests\TestInterface;
@@ -15,9 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class EventClientSpec extends ObjectBehavior
 {
-    function let(GuzzleClientInterface $guzzle)
+    function let(ConfigurationInterface $config, GuzzleClientInterface $guzzle)
     {
-        $this->beConstructedWith($guzzle);
+        $config->getAccessToken()->willReturn('1234');
+        $config->getClient()->willReturn($guzzle);
+        $config->isValid()->willReturn(true);
+        $this->beConstructedWith($config);
     }
     
     function it_is_initializable()
@@ -38,17 +41,19 @@ class EventClientSpec extends ObjectBehavior
         GuzzleResponse $guzzleResponse
     ) {
         $event->getTimestamp()->willReturn(123456);
-        $event->getAppId()->willReturn('appId');
         $event->getSessionId()->willReturn('sessionId');
-        $event->getName()->willReturn('name');
+        $event->getCollection()->willReturn('name');
+        $event->getData()->willReturn(array('foo' => 'bar'));
         $event->getView()->willReturn(null);
         $event->getRequest()->willReturn(null);
 
-        $guzzle->post('/events', array('Content-Type' => 'application/json'), json_encode(array(
+        $guzzle->post('/events', array(), json_encode(array(
             'timestamp' => 123456,
-            'appId' => 'appId',
             'sessionId' => 'sessionId',
-            'name' => 'name',
+            'collection' => 'name',
+            'data' => [
+                'foo' => 'bar'
+            ],
             'view' => null,
             'request' => null
         )))->willReturn($guzzleRequest);
@@ -67,9 +72,9 @@ class EventClientSpec extends ObjectBehavior
         GuzzleResponse $guzzleResponse
     ) {
         $event->getTimestamp()->willReturn(123456);
-        $event->getAppId()->willReturn('appId');
         $event->getSessionId()->willReturn('sessionId');
-        $event->getName()->willReturn('name');
+        $event->getCollection()->willReturn('name');
+        $event->getData()->willReturn(array('foo' => 'bar'));
         $event->getView()->willReturn($view);
         $event->getRequest()->willReturn(null);
 
@@ -78,11 +83,13 @@ class EventClientSpec extends ObjectBehavior
         $test->getId()->willReturn('testId');
         $test->getVariant()->willReturn(0);
 
-        $guzzle->post('/events', array('Content-Type' => 'application/json'), json_encode(array(
+        $guzzle->post('/events', array(), json_encode(array(
             'timestamp' => 123456,
-            'appId' => 'appId',
             'sessionId' => 'sessionId',
-            'name' => 'name',
+            'collection' => 'name',
+            'data' => [
+                'foo' => 'bar'
+            ],
             'view' => array(
                 'segment' => 'default',
                 'test' => array(
@@ -106,19 +113,21 @@ class EventClientSpec extends ObjectBehavior
         GuzzleResponse $guzzleResponse
     ) {
         $event->getTimestamp()->willReturn(123456);
-        $event->getAppId()->willReturn('appId');
         $event->getSessionId()->willReturn('sessionId');
-        $event->getName()->willReturn('name');
+        $event->getCollection()->willReturn('name');
+        $event->getData()->willReturn(array('foo' => 'bar'));
         $event->getView()->willReturn(null);
         $event->getRequest()->willReturn($request);
 
         $request->__toString()->willReturn('wow');
 
-        $guzzle->post('/events', array('Content-Type' => 'application/json'), json_encode(array(
+        $guzzle->post('/events', array(), json_encode(array(
             'timestamp' => 123456,
-            'appId' => 'appId',
             'sessionId' => 'sessionId',
-            'name' => 'name',
+            'collection' => 'name',
+            'data' => [
+                'foo' => 'bar'
+            ],
             'view' => null,
             'request' => 'wow'
         )))->willReturn($guzzleRequest);

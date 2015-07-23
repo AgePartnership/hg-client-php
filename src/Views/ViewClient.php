@@ -5,22 +5,27 @@ namespace TheMarketingLab\Hg\Views;
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Message\Response;
+use TheMarketingLab\Hg\ConfigurationInterface;
 
 class ViewClient implements ViewClientInterface
 {
     private $client;
     private $viewFactory;
 
-    public function __construct(GuzzleClientInterface $client, ViewFactoryInterface $viewFactory = null)
+    public function __construct(ConfigurationInterface $config, ViewFactoryInterface $viewFactory = null)
     {
-        $this->client = $client;
+        if (!$config->isValid()) {
+            throw new \InvalidArgumentException('Invalid configuration passed to ViewClient');
+        }
+
+        $this->client = $config->getClient();
         $this->viewFactory = $viewFactory ?: new ViewFactory();
     }
 
-    public static function create($uri)
+    public static function create($appId, $uri)
     {
         $client = new GuzzleClient($uri);
-        return new self($client);
+        return new self($appId, $client);
     }
 
     public function getClient()
@@ -46,11 +51,7 @@ class ViewClient implements ViewClientInterface
             );
         }
 
-        $headers = array(
-            'Content-Type' => 'application/json'
-        );
-
-        $request = $this->getClient()->post('/views', $headers, json_encode($data));
+        $request = $this->getClient()->post('/views', array(), json_encode($data));
         $response = $request->send();
 
         return $this->getViewFactory()->create($response);

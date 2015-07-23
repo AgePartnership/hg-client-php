@@ -5,9 +5,9 @@ namespace TheMarketingLab\Hg\Events;
 interface EventInterface
 {
     public function getTimestamp();
-    public function getAppId();
     public function getSessionId();
-    public function getName();
+    public function getCollection();
+    public function getData();
     /**
      * @return ViewInterface|null
      */
