@@ -43,6 +43,30 @@ class EventClientSpec extends ObjectBehavior
         $event->getTimestamp()->willReturn(123456);
         $event->getSessionId()->willReturn('sessionId');
         $event->getCollection()->willReturn('name');
+        $event->getData()->willReturn(null);
+        $event->getView()->willReturn(null);
+        $event->getRequest()->willReturn(null);
+
+        $guzzle->post('/events', array(), json_encode(array(
+            'timestamp' => 123456,
+            'sessionId' => 'sessionId',
+            'collection' => 'name'
+        )))->willReturn($guzzleRequest);
+
+        $guzzleRequest->send()->willReturn($guzzleResponse);
+
+        $this->publish($event)->shouldReturn($guzzleResponse);
+    }
+
+    function it_publishes_an_event_with_data(
+        GuzzleClientInterface $guzzle,
+        EventInterface $event,
+        GuzzleRequestInterface $guzzleRequest,
+        GuzzleResponse $guzzleResponse
+    ) {
+        $event->getTimestamp()->willReturn(123456);
+        $event->getSessionId()->willReturn('sessionId');
+        $event->getCollection()->willReturn('name');
         $event->getData()->willReturn(array('foo' => 'bar'));
         $event->getView()->willReturn(null);
         $event->getRequest()->willReturn(null);
@@ -51,11 +75,9 @@ class EventClientSpec extends ObjectBehavior
             'timestamp' => 123456,
             'sessionId' => 'sessionId',
             'collection' => 'name',
-            'data' => [
+            'data' => array(
                 'foo' => 'bar'
-            ],
-            'view' => null,
-            'request' => null
+            )
         )))->willReturn($guzzleRequest);
 
         $guzzleRequest->send()->willReturn($guzzleResponse);
@@ -74,7 +96,7 @@ class EventClientSpec extends ObjectBehavior
         $event->getTimestamp()->willReturn(123456);
         $event->getSessionId()->willReturn('sessionId');
         $event->getCollection()->willReturn('name');
-        $event->getData()->willReturn(array('foo' => 'bar'));
+        $event->getData()->willReturn(null);
         $event->getView()->willReturn($view);
         $event->getRequest()->willReturn(null);
 
@@ -87,17 +109,13 @@ class EventClientSpec extends ObjectBehavior
             'timestamp' => 123456,
             'sessionId' => 'sessionId',
             'collection' => 'name',
-            'data' => [
-                'foo' => 'bar'
-            ],
             'view' => array(
                 'segment' => 'default',
                 'test' => array(
                     'id' => 'testId',
                     'variant' => 0
                 )
-            ),
-            'request' => null
+            )
         )))->willReturn($guzzleRequest);
 
         $guzzleRequest->send()->willReturn($guzzleResponse);
@@ -115,7 +133,7 @@ class EventClientSpec extends ObjectBehavior
         $event->getTimestamp()->willReturn(123456);
         $event->getSessionId()->willReturn('sessionId');
         $event->getCollection()->willReturn('name');
-        $event->getData()->willReturn(array('foo' => 'bar'));
+        $event->getData()->willReturn(null);
         $event->getView()->willReturn(null);
         $event->getRequest()->willReturn($request);
 
@@ -125,10 +143,6 @@ class EventClientSpec extends ObjectBehavior
             'timestamp' => 123456,
             'sessionId' => 'sessionId',
             'collection' => 'name',
-            'data' => [
-                'foo' => 'bar'
-            ],
-            'view' => null,
             'request' => 'wow'
         )))->willReturn($guzzleRequest);
 
