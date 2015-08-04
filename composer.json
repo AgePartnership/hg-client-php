@@ -20,5 +20,10 @@
         "psr-4": {
             "TheMarketingLab\\Hg\\": "src/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-feature/events-v2": "0.3.x-dev"
+        }
     }
 }
