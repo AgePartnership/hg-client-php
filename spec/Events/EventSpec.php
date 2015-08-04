@@ -37,8 +37,8 @@ class EventSpec extends ObjectBehavior
 
     function it_can_have_data()
     {
-        $this->beConstructedWith(123456, 'sessionId', 'collection', ['foo' => 'bar']);
-        $this->getData()->shouldReturn(['foo' => 'bar']);
+        $this->beConstructedWith(123456, 'sessionId', 'collection', array('foo' => 'bar'));
+        $this->getData()->shouldReturn(array('foo' => 'bar'));
     }
 
     function it_can_have_a_test_view(ViewInterface $view)
